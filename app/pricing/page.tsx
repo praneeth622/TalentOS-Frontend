@@ -12,6 +12,7 @@ import {
   TrendingUp,
   Crown,
 } from "lucide-react";
+import Link from "next/link";
 import { Navbar } from "../components/landing/Navbar";
 import { Footer } from "../components/landing/Footer";
 import { ScrollProgress } from "../components/ui/ScrollProgress";
@@ -37,6 +38,7 @@ interface Plan {
   iconGradient: string;
   features: PlanFeature[];
   ctaLabel: string;
+  ctaHref: string;
   ctaVariant: "outline" | "solid" | "outline-dark";
   highlighted: boolean;
   badge?: string;
@@ -53,6 +55,7 @@ const plans: Plan[] = [
     icon: Zap,
     iconGradient: "from-slate-500 to-slate-700",
     ctaLabel: "Get Started Free",
+    ctaHref: "/register",
     ctaVariant: "outline",
     highlighted: false,
     features: [
@@ -74,6 +77,7 @@ const plans: Plan[] = [
     icon: TrendingUp,
     iconGradient: "from-indigo-500 to-purple-600",
     ctaLabel: "Start Free Trial",
+    ctaHref: "/register",
     ctaVariant: "solid",
     highlighted: true,
     badge: "Most Popular",
@@ -97,6 +101,7 @@ const plans: Plan[] = [
     icon: Crown,
     iconGradient: "from-amber-500 to-orange-600",
     ctaLabel: "Contact Us",
+    ctaHref: "/#contact",
     ctaVariant: "outline-dark",
     highlighted: false,
     features: [
@@ -299,19 +304,21 @@ function PricingCard({
           </div>
 
           {/* CTA */}
-          <motion.button
-            className={`w-full py-3.5 rounded-full font-semibold text-sm transition-all mb-7 ${
-              plan.ctaVariant === "solid"
-                ? "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40"
-                : plan.ctaVariant === "outline-dark"
-                ? "border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white"
-                : "border-2 border-slate-200 text-slate-700 hover:border-slate-900 hover:text-slate-900"
-            }`}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            {plan.ctaLabel}
-          </motion.button>
+          <Link href={plan.ctaHref} className="block mb-7">
+            <motion.span
+              className={`block w-full py-3.5 rounded-full font-semibold text-sm text-center transition-all ${
+                plan.ctaVariant === "solid"
+                  ? "bg-linear-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40"
+                  : plan.ctaVariant === "outline-dark"
+                  ? "border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white"
+                  : "border-2 border-slate-200 text-slate-700 hover:border-slate-900 hover:text-slate-900"
+              }`}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {plan.ctaLabel}
+            </motion.span>
+          </Link>
 
           {/* Features */}
           <ul className="space-y-3 flex-1">
@@ -585,7 +592,7 @@ export default function PricingPage() {
                     transition={{ delay: 0.5 }}
                   >
                     <motion.a
-                      href="#"
+                      href="/register"
                       className="bg-linear-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-sm flex items-center gap-2 shadow-xl shadow-indigo-600/30 hover:shadow-2xl hover:shadow-indigo-600/40 transition-all"
                       whileHover={{ scale: 1.04 }}
                       whileTap={{ scale: 0.97 }}

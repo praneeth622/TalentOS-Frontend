@@ -2,19 +2,20 @@
 
 import { motion } from "framer-motion";
 import { Twitter, Github, Linkedin, Mail, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 const footerLinks = {
   Product: [
-    { label: "Features", href: "#features" },
+    { label: "Features", href: "/#features" },
     { label: "Pricing", href: "/pricing" },
-    { label: "Integrations", href: "#integrations" },
+    { label: "Integrations", href: "/#integrations" },
     { label: "Changelog", href: "#" },
   ],
   Company: [
     { label: "About", href: "/about" },
     { label: "Blog", href: "#" },
     { label: "Careers", href: "#" },
-    { label: "Contact", href: "#contact" },
+    { label: "Contact", href: "/#contact" },
   ],
   Resources: [
     { label: "Documentation", href: "#" },
@@ -38,7 +39,7 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-white to-slate-50 border-t border-slate-100 pt-20 pb-8 relative overflow-hidden">
+    <footer className="bg-linear-to-b from-white to-slate-50 border-t border-slate-100 pt-20 pb-8 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-[0.015]">
         <div
@@ -53,7 +54,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Newsletter section */}
         <motion.div
-          className="mb-16 bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-10 relative overflow-hidden"
+          className="mb-16 bg-linear-to-br from-slate-900 to-slate-800 rounded-3xl p-10 relative overflow-hidden"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -97,13 +98,12 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <motion.a
-              href="/"
-              className="text-2xl font-bold text-slate-900 inline-block mb-4"
-              whileHover={{ scale: 1.03 }}
-            >
-              Talent<span className="text-blue-600">OS</span>
-            </motion.a>
+          <Link
+            href="/"
+            className="text-2xl font-bold text-slate-900 inline-block mb-4 hover:opacity-80 transition-opacity"
+          >
+            Talent<span className="text-blue-600">OS</span>
+          </Link>
             <p className="text-sm text-slate-600 leading-relaxed mb-4">
               AI-native workforce intelligence platform empowering modern teams
               to reach their full potential.
@@ -148,17 +148,16 @@ export function Footer() {
                     viewport={{ once: true }}
                     transition={{ delay: catIdx * 0.1 + idx * 0.05 }}
                   >
-                    <motion.a
+                    <Link
                       href={link.href}
                       className="text-sm text-slate-600 hover:text-blue-600 transition-colors inline-flex items-center gap-1 group"
-                      whileHover={{ x: 3 }}
                     >
                       {link.label}
                       <ArrowUpRight
                         size={12}
                         className="opacity-0 group-hover:opacity-100 transition-opacity"
                       />
-                    </motion.a>
+                    </Link>
                   </motion.li>
                 ))}
               </ul>

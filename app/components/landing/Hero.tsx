@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { MagneticButton } from "../ui/MagneticButton";
 import { TextReveal } from "../ui/TextReveal";
 
@@ -67,7 +68,7 @@ export function Hero() {
           <span className="inline-block">
             <TextReveal text=" Smart" delay={0.4} />
             <motion.span
-              className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
+              className="inline-block bg-linear-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.7, duration: 0.5 }}
@@ -96,13 +97,15 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.6 }}
         >
-          <MagneticButton className="group bg-slate-900 text-white px-8 py-4 rounded-full text-base font-medium hover:bg-slate-800 transition-colors flex items-center gap-2 shadow-lg shadow-slate-900/20">
-            Start Free Trial
-            <ArrowRight
-              size={16}
-              className="transition-transform group-hover:translate-x-1"
-            />
-          </MagneticButton>
+          <Link href="/register">
+            <MagneticButton className="group bg-slate-900 text-white px-8 py-4 rounded-full text-base font-medium hover:bg-slate-800 transition-colors flex items-center gap-2 shadow-lg shadow-slate-900/20">
+              Start Free Trial
+              <ArrowRight
+                size={16}
+                className="transition-transform group-hover:translate-x-1"
+              />
+            </MagneticButton>
+          </Link>
 
           <MagneticButton className="group flex items-center gap-2 px-6 py-4 text-base text-slate-600 hover:text-slate-900 transition-colors">
             <span className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 transition-colors">
@@ -169,7 +172,7 @@ export function Hero() {
           </div>
 
           {/* Glow effect */}
-          <div className="absolute -inset-4 bg-gradient-to-r from-blue-100/40 via-purple-100/40 to-indigo-100/40 rounded-3xl -z-10 blur-2xl" />
+          <div className="absolute -inset-4 bg-linear-to-r from-blue-100/40 via-purple-100/40 to-indigo-100/40 rounded-3xl -z-10 blur-2xl" />
         </motion.div>
       </div>
     </section>
