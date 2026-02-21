@@ -7,7 +7,7 @@ import { TextReveal } from "../ui/TextReveal";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16">
       {/* Animated background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -47,12 +47,12 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 text-center pt-8">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, y: 20, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
+          transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1], delay: 0.2 }}
           className="inline-flex items-center gap-2 bg-blue-50 border border-blue-100 rounded-full px-4 py-1.5 mb-8"
         >
           <Sparkles size={14} className="text-blue-600" />
@@ -67,7 +67,7 @@ export function Hero() {
           <span className="inline-block">
             <TextReveal text=" Smart" delay={0.4} />
             <motion.span
-              className="inline-block text-blue-600"
+              className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.7, duration: 0.5 }}
