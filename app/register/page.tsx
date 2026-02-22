@@ -96,6 +96,7 @@ export default function RegisterPage() {
       const { token, organization } = res.data.data;
       localStorage.setItem("talentos_token", token);
       localStorage.setItem("talentos_org", JSON.stringify(organization));
+      localStorage.setItem("talentos_role", "admin");
 
       toast.success(`Welcome to TalentOS, ${organization.name}!`);
       router.replace("/dashboard");

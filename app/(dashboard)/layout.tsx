@@ -300,6 +300,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       return;
     }
 
+    // Decode JWT to check role — employees must not access admin pages
+    try {
+      const payload = JSON.parse(
+        atob(token.split(".")[1])
+      ) as { employeeId?: string };
+
+      if (payload.employeeId) {
+        router.replace("/employee-dashboard");
+        return;
+      }
+    } catch {
+      router.replace("/login");
+      return;
+    }
+
     setOrg(getStoredOrg());
 
     /* Clear any lingering dark mode from previous sessions */

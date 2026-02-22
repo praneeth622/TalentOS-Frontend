@@ -49,4 +49,33 @@ export function getToken(): string | null {
 export function clearAuth(): void {
   localStorage.removeItem("talentos_token");
   localStorage.removeItem("talentos_org");
+  localStorage.removeItem("talentos_role");
+  localStorage.removeItem("talentos_employee");
+}
+
+/**
+ * Returns the stored role ('admin' | 'employee') or null.
+ */
+export function getStoredRole(): "admin" | "employee" | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("talentos_role") as "admin" | "employee" | null;
+}
+
+/**
+ * Returns the stored employee object from localStorage, or null.
+ */
+export function getStoredEmployee(): {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  department: string;
+} | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = localStorage.getItem("talentos_employee");
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
 }
