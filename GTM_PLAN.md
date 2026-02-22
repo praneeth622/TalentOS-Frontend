@@ -60,4 +60,4 @@ Short go-to-market and revenue strategy for TalentOS.
 - **₹5,000 experiment:** LinkedIn, small paid search/social, content/collabs, one demo video, light events.
 - **Revenue:** (1) SaaS tiers, (2) Analytics/reporting add-ons, (3) AI usage add-ons.
 
-For product and API details, see [README](../README.md) and [SYSTEM_DESIGN.md](../SYSTEM_DESIGN.md).
+For product and API details, see [Backend README](https://github.com/praneeth622/TalentOS---backend/blob/main/README.md) and [SYSTEM_DESIGN.md](./SYSTEM_DESIGN.md).

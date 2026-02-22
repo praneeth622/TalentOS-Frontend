@@ -10,7 +10,7 @@ Modern workforce intelligence dashboard built with Next.js, featuring dual-role 
 
 ## Tech Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
 - **Components:** shadcn/ui, Aceternity UI, Framer Motion
@@ -181,4 +181,4 @@ Set `NEXT_PUBLIC_API_URL` to the production backend URL in your deployment envir
 
 ## GTM & strategy
 
-Go-to-market plan (target company size, HR personas, 3-month roadmap, ₹5,000 marketing experiment, revenue streams): **[docs/GTM_PLAN.md](../docs/GTM_PLAN.md)**.
+Go-to-market plan (target company size, HR personas, 3-month roadmap, ₹5,000 marketing experiment, revenue streams): **[GTM_PLAN.md](./GTM_PLAN.md)**.
