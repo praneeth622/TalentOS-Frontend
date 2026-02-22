@@ -47,6 +47,64 @@ NEXT_PUBLIC_API_URL=http://localhost:5001
 
 Docker is used for the **backend** only; see [backend README](../backend/README.md) for `docker pull praneeth0331/talentos-backend:latest` and `docker compose up -d`.
 
+## User Flow
+
+How users move through TalentOS — **Admin** (organization) and **Employee** flows, with stages and what happens at each step.
+
+### Admin flow (organization)
+
+```
+  Stage 1            Stage 2              Stage 3              Stage 4              Stage 5
+  ─────────          ─────────            ─────────            ─────────            ─────────
+  Register org   →   Create employees  →  (Optional)        →  Assign tasks     →   Dashboard &
+  (/register)        (/employees)          Add resume           (/tasks)             AI insights
+                         │                 (PDF upload)             │                 (/ai-insights)
+                         │                       │                  │
+                         ▼                       ▼                  ▼
+                    System generates        AI extracts         Kanban board:
+                    password & sends        skills, role,        drag status,
+                    welcome email to       summary (Gemini)      deadlines,
+                    employee’s inbox       → pre-fill form      Web3 verify
+```
+
+| Stage | What happens |
+|-------|----------------|
+| **1. Org creation** | Admin registers at `/register`. JWT issued; redirect to `/dashboard`. |
+| **2. Create employee** | Admin adds name, email, role, department, skills. **On submit:** backend generates a temporary password, stores hashed password, and **sends a welcome email** (Resend) to the employee’s address (e.g. `praneethdevarasetty31@gmail.com`) with login link and credentials. Employee can log in via **Employee** tab on `/login`. |
+| **2b. Add resume (optional)** | Admin uploads a PDF resume. **AI (Gemini)** extracts skills, name, role, summary and pre-fills the create-employee form — **recruiter-friendly**, less manual data entry. |
+| **3. Assign tasks** | Admin creates tasks from `/tasks`, assigns to an employee, sets priority and deadline. **Smart Assign** (AI) can suggest the best employee for a task. |
+| **4. Dashboard & AI** | Dashboard shows org stats, leaderboard, activity. **AI insights:** Copilot Q&A, org skill gap heatmap, daily insight, all with **24h server-side cache** to reduce cost and latency. |
+
+### Employee flow
+
+```
+  Stage 1                Stage 2                Stage 3                Stage 4
+  ─────────              ─────────               ─────────              ─────────
+  Receive email      →   Login (Employee    →   My Tasks            →   My Profile &
+  (credentials)          tab on /login)         (/my-tasks)              Skill Gap
+                               │                     │                         │
+                               ▼                     ▼                         ▼
+                          JWT with             Kanban: move            Edit skills,
+                          employeeId           status (drag),          wallet, change
+                          → /employee-         Log to Chain            password, view
+                          dashboard            (MetaMask)              AI learning plan
+```
+
+| Stage | What happens |
+|-------|----------------|
+| **1. Receive email** | Employee gets welcome email with login URL, email, and temporary password. |
+| **2. Login** | Employee uses **Employee** tab on `/login`. JWT includes `employeeId`; redirect to `/employee-dashboard`. |
+| **3. My tasks** | View and update task status (e.g. Todo → In progress → Completed). For completed tasks, **Log to Chain** signs via MetaMask and stores proof on profile. |
+| **4. Profile & skill gap** | Edit own skills, connect wallet, change password. **Skill gap** page shows AI-generated missing skills and a 30-day learning plan (cached 24h). |
+
+### Best practices we use
+
+- **AI caching:** Skill gap, daily insight, and org skill gap responses are cached for 24 hours to limit Gemini calls and keep the app fast and cost-effective.
+- **Recruiter-friendly:** Resume upload + AI extraction reduces manual data entry; welcome email with credentials ensures new hires can log in immediately.
+- **Dual-role auth:** Clear separation (admin vs employee) with role-specific routes and layouts; no cross-role access.
+- **Web3 optional:** Task verification on-chain is optional; core HR flows work without MetaMask.
+
+For **GTM plan** (target personas, 3-month roadmap, ₹5,000 marketing experiment, revenue streams), see **[docs/GTM_PLAN.md](../docs/GTM_PLAN.md)**.
 
 ## Pages
 
@@ -120,3 +178,7 @@ npm run lint     # Run ESLint
 Deployed on **Vercel** (or any static host) at https://talentos.praneethd.xyz.
 
 Set `NEXT_PUBLIC_API_URL` to the production backend URL in your deployment environment.
+
+## GTM & strategy
+
+Go-to-market plan (target company size, HR personas, 3-month roadmap, ₹5,000 marketing experiment, revenue streams): **[docs/GTM_PLAN.md](../docs/GTM_PLAN.md)**.
