@@ -12,12 +12,12 @@ import {
   LogOut,
   Menu,
   X,
-  Wallet,
   HelpCircle,
   Brain,
 } from "lucide-react";
 import { Toaster } from "sonner";
 import { clearAuth, getStoredOrg, getToken } from "../../lib/api";
+import { WalletButton } from "../components/web3/WalletButton";
 
 /* ── Nav structure (Logip-style grouped sections) ─────────────────── */
 
@@ -42,13 +42,6 @@ function getInitials(name: string): string {
     .slice(0, 2)
     .map((w) => w[0]?.toUpperCase() ?? "")
     .join("");
-}
-
-/**
- * Truncates an Ethereum address to "0x1234…5678" format.
- */
-function formatAddress(addr: string): string {
-  return `${addr.slice(0, 6)}…${addr.slice(-4)}`;
 }
 
 /* ── Nav item component ───────────────────────────────────────────── */
@@ -233,12 +226,10 @@ function Sidebar({ org, open, onClose, onLogout }: SidebarProps) {
 
 interface TopBarProps {
   org: { id: string; name: string; email: string } | null;
-  wallet: string | null;
   onToggleSidebar: () => void;
-  onConnectWallet: () => void;
 }
 
-function TopBar({ org, wallet, onToggleSidebar, onConnectWallet }: TopBarProps) {
+function TopBar({ org, onToggleSidebar }: TopBarProps) {
   const pathname = usePathname();
 
   const getGreeting = () => {
@@ -278,21 +269,8 @@ function TopBar({ org, wallet, onToggleSidebar, onConnectWallet }: TopBarProps) 
         </div>
       ) : null}
 
-      <div className="ml-auto flex items-center gap-2.5">
-        {/* Wallet button */}
-        <motion.button
-          className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors border ${
-            wallet
-              ? "bg-green-50 text-green-700 border-green-200"
-              : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
-          }`}
-          onClick={!wallet ? onConnectWallet : undefined}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-        >
-          <Wallet size={14} />
-          {wallet ? formatAddress(wallet) : "Connect Wallet"}
-        </motion.button>
+      <div className="ml-auto flex items-center gap-3">
+        <WalletButton />
 
         {/* Org avatar */}
         {org && (
@@ -311,7 +289,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const [ready, setReady] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [wallet, setWallet] = useState<string | null>(null);
   const [org, setOrg] = useState<{ id: string; name: string; email: string } | null>(null);
 
   /* Auth guard */
@@ -329,35 +306,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     document.documentElement.classList.remove("dark");
     localStorage.removeItem("talentos_dark");
 
-    const savedWallet = localStorage.getItem("talentos_wallet");
-    if (savedWallet) setWallet(savedWallet);
-
     setReady(true);
   }, [router]);
 
   const handleLogout = () => {
     clearAuth();
-    localStorage.removeItem("talentos_wallet");
     router.replace("/login");
-  };
-
-  const handleConnectWallet = async () => {
-    if (typeof window === "undefined") return;
-    const ethereum = (window as unknown as { ethereum?: { request: (args: { method: string }) => Promise<string[]> } }).ethereum;
-
-    if (!ethereum) {
-      alert("MetaMask is not installed.");
-      return;
-    }
-
-    try {
-      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-      const address = accounts[0];
-      setWallet(address);
-      localStorage.setItem("talentos_wallet", address);
-    } catch {
-      /* User rejected */
-    }
   };
 
   if (!ready) {
@@ -382,9 +336,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex flex-col flex-1 min-h-screen lg:ml-[220px]">
         <TopBar
           org={org}
-          wallet={wallet}
           onToggleSidebar={() => setSidebarOpen(true)}
-          onConnectWallet={handleConnectWallet}
         />
 
         <main className="flex-1 overflow-auto p-6">

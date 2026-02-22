@@ -1,22 +1,18 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { motion, AnimatePresence } from "framer-motion";
-import { toast } from "sonner";
 import {
   MoreHorizontal,
   Pencil,
   Trash2,
   Calendar,
   AlertTriangle,
-  Check,
-  Link2,
-  Loader2,
 } from "lucide-react";
-import { api } from "@/lib/api";
 import type { Task } from "@/types/tasks";
+import { LogToChainButton } from "@/app/components/web3/LogToChainButton";
 
 /* ── Priority badge config ───────────────────────────────────────────── */
 
@@ -193,7 +189,6 @@ export default function KanbanCard({
   overlay = false,
 }: KanbanCardProps) {
   const [showConfirm, setShowConfirm] = useState(false);
-  const [logging, setLogging] = useState(false);
 
   const {
     attributes,
@@ -210,46 +205,6 @@ export default function KanbanCard({
   };
 
   const overdue = isOverdue(task.deadline, task.status);
-
-  async function logTaskToChain() {
-    const ethereum = (window as unknown as { ethereum?: {
-      request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
-    } }).ethereum;
-    if (!ethereum) {
-      toast.error("Please install MetaMask to verify tasks on-chain");
-      return;
-    }
-
-    setLogging(true);
-    try {
-      const accounts = (await ethereum.request({
-        method: "eth_requestAccounts",
-      })) as string[];
-
-      const message = `TalentOS Task Verified\nTask ID: ${task.id}\nTimestamp: ${new Date().toISOString()}\nVerified by: ${accounts[0]}`;
-
-      const signature = await ethereum.request({
-        method: "personal_sign",
-        params: [message, accounts[0]],
-      });
-
-      await api.patch(`/api/tasks/${task.id}/txhash`, {
-        txHash: signature,
-      });
-
-      toast.success("Task verified on Polygon");
-      onRefetch();
-    } catch (err: unknown) {
-      const code = (err as { code?: number })?.code;
-      if (code === 4001) {
-        toast.error("Wallet connection cancelled");
-      } else {
-        toast.error("Failed to log task, please try again");
-      }
-    } finally {
-      setLogging(false);
-    }
-  }
 
   function handleDelete() {
     setShowConfirm(true);
@@ -337,38 +292,15 @@ export default function KanbanCard({
         )}
 
         {/* Bottom: Chain verification */}
-        {task.status === "COMPLETED" && !task.txHash && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              logTaskToChain();
-            }}
-            disabled={logging}
-            className="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 transition-colors disabled:opacity-50"
-          >
-            {logging ? (
-              <Loader2 size={12} className="animate-spin" />
-            ) : (
-              <Link2 size={12} />
-            )}
-            {logging ? "Signing…" : "Log to Chain"}
-          </button>
-        )}
-
-        {task.txHash && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(
-                `https://amoy.polygonscan.com/tx/${task.txHash}`,
-                "_blank",
-              );
-            }}
-            className="mt-3 w-full flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-green-700 bg-green-100 rounded-lg hover:bg-green-200 transition-colors"
-          >
-            <Check size={12} />
-            Verified on Polygon
-          </button>
+        {task.status === "COMPLETED" && (
+          <div onClick={(e) => e.stopPropagation()}>
+            <LogToChainButton
+              taskId={task.id}
+              taskTitle={task.title}
+              txHash={task.txHash}
+              onVerified={onRefetch}
+            />
+          </div>
         )}
       </motion.div>
 
