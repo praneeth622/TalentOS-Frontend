@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "https://talentos-backend.onrender.com";
 
 /**
  * Pre-configured axios instance that reads the auth token from localStorage

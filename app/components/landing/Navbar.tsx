@@ -1,9 +1,10 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getToken, getStoredRole } from "@/lib/api";
 
 /*
  * Hash links use /#section so they resolve correctly from any page
@@ -21,6 +22,19 @@ const MotionLink = motion.create(Link);
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState<"admin" | "employee" | null>(null);
+
+  useEffect(() => {
+    const token = getToken();
+    const r = getStoredRole();
+    setIsLoggedIn(!!token);
+    setRole(r);
+  }, []);
+
+  const dashboardHref = role === "employee" ? "/employee-dashboard" : "/dashboard";
+  const dashboardLabel = role === "employee" ? "My Dashboard" : "Dashboard";
+
   const { scrollY } = useScroll();
   const bgOpacity = useTransform(scrollY, [0, 100], [0, 1]);
   const blur = useTransform(scrollY, [0, 100], [0, 12]);
@@ -66,22 +80,36 @@ export function Navbar() {
 
           {/* Desktop CTA buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <MotionLink
-              href="/login"
-              className="text-sm text-slate-600 hover:text-slate-900 px-4 py-2 transition-colors"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Log in
-            </MotionLink>
-            <MotionLink
-              href="/register"
-              className="text-sm bg-slate-900 text-white px-5 py-2.5 rounded-full hover:bg-slate-800 transition-colors"
-              whileHover={{ scale: 1.03, boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
-              whileTap={{ scale: 0.97 }}
-            >
-              Get Started
-            </MotionLink>
+            {isLoggedIn ? (
+              <MotionLink
+                href={dashboardHref}
+                className="text-sm bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+                whileHover={{ scale: 1.03, boxShadow: "0 4px 20px rgba(37,99,235,0.35)" }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <LayoutDashboard size={16} strokeWidth={2} />
+                {dashboardLabel}
+              </MotionLink>
+            ) : (
+              <>
+                <MotionLink
+                  href="/login"
+                  className="text-sm text-slate-600 hover:text-slate-900 px-4 py-2 transition-colors"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Log in
+                </MotionLink>
+                <MotionLink
+                  href="/register"
+                  className="text-sm bg-slate-900 text-white px-5 py-2.5 rounded-full hover:bg-slate-800 transition-colors"
+                  whileHover={{ scale: 1.03, boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Get Started
+                </MotionLink>
+              </>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -126,20 +154,33 @@ export function Navbar() {
         ))}
 
         <div className="mt-4 space-y-3">
-          <Link
-            href="/login"
-            className="block text-center border border-slate-200 text-slate-800 px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors"
-            onClick={() => setMobileOpen(false)}
-          >
-            Log in
-          </Link>
-          <Link
-            href="/register"
-            className="block text-center bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-800 transition-colors"
-            onClick={() => setMobileOpen(false)}
-          >
-            Get Started
-          </Link>
+          {isLoggedIn ? (
+            <Link
+              href={dashboardHref}
+              className="flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 text-blue-700 px-5 py-3 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              <LayoutDashboard size={18} strokeWidth={2} />
+              {dashboardLabel}
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="block text-center border border-slate-200 text-slate-800 px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors"
+                onClick={() => setMobileOpen(false)}
+              >
+                Log in
+              </Link>
+              <Link
+                href="/register"
+                className="block text-center bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-800 transition-colors"
+                onClick={() => setMobileOpen(false)}
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       </motion.div>
     </>
