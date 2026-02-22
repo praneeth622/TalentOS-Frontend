@@ -346,7 +346,7 @@ export function ApiDocs() {
             href={API_DOCS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative z-10 flex items-center gap-2 bg-white text-slate-900 px-7 py-3.5 rounded-full font-semibold text-sm hover:bg-blue-50 transition-colors shrink-0 shadow-lg"
+            className="relative z-10 flex items-center gap-2 bg-white text-slate-900 px-7 py-3.5 rounded-full font-semibold text-sm hover:bg-blue-50 transition-colors shrink-0 shadow-lg cursor-pointer"
             whileHover={{ scale: 1.04, boxShadow: "0 8px 30px rgba(59,130,246,0.3)" }}
             whileTap={{ scale: 0.97 }}
           >

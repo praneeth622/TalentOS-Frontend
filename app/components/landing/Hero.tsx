@@ -97,7 +97,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.6 }}
         >
-          <Link href="/register">
+          <Link href="/register" className="cursor-pointer">
             <MagneticButton className="group bg-slate-900 text-white px-8 py-4 rounded-full text-base font-medium hover:bg-slate-800 transition-colors flex items-center gap-2 shadow-lg shadow-slate-900/20">
               Start Free Trial
               <ArrowRight
@@ -107,19 +107,26 @@ export function Hero() {
             </MagneticButton>
           </Link>
 
-          <Link href="https://talentos-api.praneethd.xyz/" target="_blank" rel="noopener noreferrer">
+          <Link href="https://talentos-api.praneethd.xyz/" target="_blank" rel="noopener noreferrer" className="cursor-pointer">
             <MagneticButton className="group flex items-center gap-2 px-6 py-4 rounded-full text-base font-medium text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors">
               <Code2 size={16} className="text-blue-600" />
               Explore API Docs
             </MagneticButton>
           </Link>
 
-          <MagneticButton className="group flex items-center gap-2 px-6 py-4 text-base text-slate-600 hover:text-slate-900 transition-colors">
-            <span className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 transition-colors">
-              <Play size={14} className="ml-0.5" />
-            </span>
-            Watch Demo
-          </MagneticButton>
+          <a
+            href="https://github.com/praneeth622/TalentOS-Frontend"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cursor-pointer"
+          >
+            <MagneticButton className="group flex items-center gap-2 px-6 py-4 text-base text-slate-600 hover:text-slate-900 transition-colors">
+              <span className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center group-hover:bg-slate-200 transition-colors">
+                <Play size={14} className="ml-0.5" />
+              </span>
+              Watch Demo
+            </MagneticButton>
+          </a>
         </motion.div>
 
         {/* Floating dashboard preview */}

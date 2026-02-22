@@ -1,10 +1,14 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Menu, X, LayoutDashboard, Code2 } from "lucide-react";
+import { Menu, X, LayoutDashboard, Code2, Github, Play } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getToken, getStoredRole } from "@/lib/api";
+
+/** Frontend repo (opens at frontend folder so README is visible). Change if repo structure differs. */
+const GITHUB_FRONTEND_URL = "https://github.com/praneeth622/TalentOS-Frontend";
+const LIVE_DEMO_URL = "https://talentos.praneethd.xyz";
 
 /*
  * Hash links use /#section so they resolve correctly from any page
@@ -49,11 +53,12 @@ export function Navbar() {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo — always goes to home */}
           <MotionLink
             href="/"
-            className="text-xl font-bold tracking-tight text-slate-900"
+            className="text-xl font-bold tracking-tight text-slate-900 cursor-pointer"
             whileHover={{ scale: 1.02 }}
+            onClick={() => setMobileOpen(false)}
           >
             Talent<span className="text-blue-600">OS</span>
           </MotionLink>
@@ -67,7 +72,7 @@ export function Navbar() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-blue-600 hover:text-blue-700 transition-colors relative flex items-center gap-1 font-medium"
+                  className="text-sm text-blue-600 hover:text-blue-700 transition-colors relative flex items-center gap-1 font-medium cursor-pointer"
                   whileHover="hover"
                 >
                   <Code2 size={13} />
@@ -83,7 +88,7 @@ export function Navbar() {
                 <MotionLink
                   key={link.label}
                   href={link.href}
-                  className="text-sm text-slate-600 hover:text-slate-900 transition-colors relative"
+                  className="text-sm text-slate-600 hover:text-slate-900 transition-colors relative cursor-pointer"
                   whileHover="hover"
                 >
                   {link.label}
@@ -100,10 +105,20 @@ export function Navbar() {
 
           {/* Desktop CTA buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <a
+              href={GITHUB_FRONTEND_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 rounded-full text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label="Frontend on GitHub"
+            >
+              <Github size={20} />
+            </a>
+            
             {isLoggedIn ? (
               <MotionLink
                 href={dashboardHref}
-                className="text-sm bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 transition-colors inline-flex items-center gap-2"
+                className="text-sm bg-blue-600 text-white px-5 py-2.5 rounded-full hover:bg-blue-700 transition-colors inline-flex items-center gap-2 cursor-pointer"
                 whileHover={{ scale: 1.03, boxShadow: "0 4px 20px rgba(37,99,235,0.35)" }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -114,7 +129,7 @@ export function Navbar() {
               <>
                 <MotionLink
                   href="/login"
-                  className="text-sm text-slate-600 hover:text-slate-900 px-4 py-2 transition-colors"
+                  className="text-sm text-slate-600 hover:text-slate-900 px-4 py-2 transition-colors cursor-pointer"
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -122,7 +137,7 @@ export function Navbar() {
                 </MotionLink>
                 <MotionLink
                   href="/register"
-                  className="text-sm bg-slate-900 text-white px-5 py-2.5 rounded-full hover:bg-slate-800 transition-colors"
+                  className="text-sm bg-slate-900 text-white px-5 py-2.5 rounded-full hover:bg-slate-800 transition-colors cursor-pointer"
                   whileHover={{ scale: 1.03, boxShadow: "0 4px 20px rgba(0,0,0,0.15)" }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -134,7 +149,7 @@ export function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 text-slate-600"
+            className="md:hidden p-2 text-slate-600 cursor-pointer"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
@@ -162,7 +177,7 @@ export function Navbar() {
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-lg text-blue-600 py-3 border-b border-slate-100 font-medium"
+              className="flex items-center gap-1.5 text-lg text-blue-600 py-3 border-b border-slate-100 font-medium cursor-pointer"
               onClick={() => setMobileOpen(false)}
             >
               <motion.span
@@ -179,7 +194,7 @@ export function Navbar() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-lg text-slate-800 py-3 border-b border-slate-100"
+              className="text-lg text-slate-800 py-3 border-b border-slate-100 cursor-pointer"
               onClick={() => setMobileOpen(false)}
             >
               <motion.span
@@ -194,11 +209,24 @@ export function Navbar() {
           )
         )}
 
+        <div className="flex items-center gap-3 mt-4">
+          <a
+            href={GITHUB_FRONTEND_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 flex-1 py-3 rounded-full border border-slate-200 text-slate-700 text-sm font-medium hover:bg-slate-50 transition-colors cursor-pointer"
+            onClick={() => setMobileOpen(false)}
+          >
+            <Github size={18} />
+            GitHub
+          </a>
+          
+        </div>
         <div className="mt-4 space-y-3">
           {isLoggedIn ? (
             <Link
               href={dashboardHref}
-              className="flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 text-blue-700 px-5 py-3 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors"
+              className="flex items-center justify-center gap-2 border border-blue-200 bg-blue-50 text-blue-700 px-5 py-3 rounded-full text-sm font-medium hover:bg-blue-100 transition-colors cursor-pointer"
               onClick={() => setMobileOpen(false)}
             >
               <LayoutDashboard size={18} strokeWidth={2} />
@@ -208,14 +236,14 @@ export function Navbar() {
             <>
               <Link
                 href="/login"
-                className="block text-center border border-slate-200 text-slate-800 px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors"
+                className="block text-center border border-slate-200 text-slate-800 px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-50 transition-colors cursor-pointer"
                 onClick={() => setMobileOpen(false)}
               >
                 Log in
               </Link>
               <Link
                 href="/register"
-                className="block text-center bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-800 transition-colors"
+                className="block text-center bg-slate-900 text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-slate-800 transition-colors cursor-pointer"
                 onClick={() => setMobileOpen(false)}
               >
                 Get Started

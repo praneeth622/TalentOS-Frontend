@@ -44,11 +44,12 @@ export function MagneticButton({
   return (
     <motion.button
       ref={ref}
+      type="button"
       style={{ x: springX, y: springY }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className={className}
+      className={`cursor-pointer ${className}`.trim()}
       whileTap={{ scale: 0.97 }}
     >
       {children}

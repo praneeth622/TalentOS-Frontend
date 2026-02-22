@@ -79,7 +79,8 @@ export function Footer() {
                 className="flex-1 md:w-64 bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-blue-400/50 focus:ring-2 focus:ring-blue-500/20 transition-all text-sm"
               />
               <motion.button
-                className="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-500 transition-colors whitespace-nowrap"
+                type="button"
+                className="bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-500 transition-colors whitespace-nowrap cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -100,7 +101,7 @@ export function Footer() {
           >
           <Link
             href="/"
-            className="text-2xl font-bold text-slate-900 inline-block mb-4 hover:opacity-80 transition-opacity"
+            className="text-2xl font-bold text-slate-900 inline-block mb-4 hover:opacity-80 transition-opacity cursor-pointer"
           >
             Talent<span className="text-blue-600">OS</span>
           </Link>
@@ -113,7 +114,7 @@ export function Footer() {
                 <motion.a
                   key={social.name}
                   href={social.href}
-                  className={`w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 ${social.color} transition-colors`}
+                  className={`w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 cursor-pointer ${social.color} transition-colors`}
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
@@ -150,7 +151,7 @@ export function Footer() {
                   >
                     <Link
                       href={link.href}
-                      className="text-sm text-slate-600 hover:text-blue-600 transition-colors inline-flex items-center gap-1 group"
+                      className="text-sm text-slate-600 hover:text-blue-600 transition-colors inline-flex items-center gap-1 group cursor-pointer"
                     >
                       {link.label}
                       <ArrowUpRight
