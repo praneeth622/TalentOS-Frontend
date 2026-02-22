@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { ScrollStack } from "../ui/ScrollStack";
+import { ScrollStack, ScrollStackItem } from "@/app/components/ui/ScrollStack";
 import { ScrollReveal } from "../ui/ScrollReveal";
 import {
   Brain,
@@ -82,9 +82,11 @@ export function FeatureShowcase() {
       </div>
 
       {/* Scroll-stacking feature cards */}
-      <ScrollStack cardHeight="70vh" stackOffset={50} scaleEffect>
+      <ScrollStack useWindowScroll itemDistance={120} itemStackDistance={24}>
         {features.map((feature) => (
-          <FeatureCard key={feature.id} feature={feature} />
+          <ScrollStackItem key={feature.id}>
+            <FeatureCard feature={feature} />
+          </ScrollStackItem>
         ))}
       </ScrollStack>
     </section>
@@ -108,7 +110,7 @@ function FeatureCard({
         {/* Left: info */}
         <div className="p-10 lg:p-14 flex flex-col justify-center">
           <motion.div
-            className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center text-white mb-6 shadow-lg`}
+            className={`w-14 h-14 rounded-2xl bg-linear-to-br ${feature.color} flex items-center justify-center text-white mb-6 shadow-lg`}
             whileHover={{ scale: 1.1, rotate: 5 }}
           >
             <feature.icon size={28} />
@@ -259,7 +261,7 @@ function AnalyticsMockup() {
 function BlockchainMockup() {
   return (
     <motion.div
-      className="bg-gradient-to-br from-purple-900 to-slate-900 rounded-2xl p-6 border border-purple-500/20 shadow-lg text-white w-full max-w-sm"
+      className="bg-linear-to-br from-purple-900 to-slate-900 rounded-2xl p-6 border border-purple-500/20 shadow-lg text-white w-full max-w-sm"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -297,7 +299,7 @@ function BlockchainMockup() {
         </div>
         <div className="flex items-center gap-2 mt-3">
           <motion.div
-            className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500"
+            className="w-8 h-8 rounded-full bg-linear-to-br from-purple-500 to-pink-500"
             animate={{ rotate: [0, 360] }}
             transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
           />
@@ -360,7 +362,7 @@ function AutomationMockup() {
           >
             <div className="flex items-center gap-3">
               <motion.div
-                className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white flex-shrink-0"
+                className="w-10 h-10 rounded-lg bg-linear-to-br from-amber-500 to-orange-500 flex items-center justify-center text-white shrink-0"
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{
                   duration: 3,

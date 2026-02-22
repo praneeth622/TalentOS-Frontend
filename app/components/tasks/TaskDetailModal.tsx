@@ -174,7 +174,7 @@ export default function TaskDetailModal({
   /* ── Save ───────────────────────────────────────────────────────────── */
 
   async function handleSave() {
-    if (!title.trim()) {
+    if (!task || !title.trim()) {
       toast.error("Title is required");
       return;
     }
@@ -208,6 +208,7 @@ export default function TaskDetailModal({
   /* ── Delete ─────────────────────────────────────────────────────────── */
 
   function handleDelete() {
+    if (!task) return;
     onDelete(task.id);
     onClose();
   }
@@ -215,6 +216,7 @@ export default function TaskDetailModal({
   /* ── Chain log ──────────────────────────────────────────────────────── */
 
   async function logTaskToChain() {
+    if (!task) return;
     const ethereum = (window as unknown as { ethereum?: {
       request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
     } }).ethereum;

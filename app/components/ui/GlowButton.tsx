@@ -35,10 +35,9 @@ export function GlowButton({
     <motion.button
       className={`relative ${style.bg} text-white px-6 py-3 rounded-full font-medium overflow-hidden group ${className}`}
       onClick={onClick}
-      whileHover={{ scale: 1.05 }}
+      whileHover={{ scale: 1.05, boxShadow: `0 20px 60px ${style.hover}` }}
       whileTap={{ scale: 0.95 }}
       initial={{ boxShadow: `0 10px 40px ${style.glow}` }}
-      whileHover={{ boxShadow: `0 20px 60px ${style.hover}` }}
     >
       {/* Shimmer effect */}
       <motion.div
