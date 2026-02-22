@@ -2,7 +2,11 @@
 
 Modern workforce intelligence dashboard built with Next.js, featuring dual-role views, AI insights, and Web3 task verification.
 
-**Production URL:** https://talentos.praneethd.xyz
+**Production URL:** https://talentos.praneethd.xyz  
+**API Docs:** [talentos-api.praneethd.xyz](https://talentos-api.praneethd.xyz/)  
+**Backend API (production):** https://talentos-backend.onrender.com
+
+
 
 ## Tech Stack
 
@@ -31,17 +35,18 @@ Open http://localhost:3000
 
 ## Environment Variables
 
-Create a `.env.local` file:
+Create a `.env.local` file (base URL only — no `/api` suffix):
 
 ```env
-NEXT_PUBLIC_API_URL=https://talentos-backend.onrender.com/api
+# Production
+NEXT_PUBLIC_API_URL=https://talentos-backend.onrender.com
+
+# Local development
+NEXT_PUBLIC_API_URL=http://localhost:5001
 ```
 
-For local development:
+Docker is used for the **backend** only; see [backend README](../backend/README.md) for `docker pull praneeth0331/talentos-backend:latest` and `docker compose up -d`.
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
-```
 
 ## Pages
 
@@ -97,11 +102,9 @@ Weighted formula: Completion (40%) + Deadline Adherence (35%) + Priority (25%)
 
 ## Backend API
 
-The frontend connects to the TalentOS backend API.
-
-- **Production:** https://talentos-backend.onrender.com/api
-- **API Docs:** See [`backend/docs/API_REFERENCE.md`](../backend/docs/API_REFERENCE.md)
-- **OpenAPI Spec:** See [`backend/openapi.yaml`](../backend/openapi.yaml)
+The frontend uses `NEXT_PUBLIC_API_URL` as the API base (e.g. `https://talentos-backend.onrender.com`).
+- **Interactive API docs:** [talentos-api.praneethd.xyz](https://talentos-api.praneethd.xyz/)
+- **Production backend:** https://talentos-backend.onrender.com
 
 ## Scripts
 
