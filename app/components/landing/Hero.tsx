@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Sparkles } from "lucide-react";
+import { ArrowRight, Play, Sparkles, Code2 } from "lucide-react";
 import Link from "next/link";
 import { MagneticButton } from "../ui/MagneticButton";
 import { TextReveal } from "../ui/TextReveal";
@@ -92,7 +92,7 @@ export function Hero() {
 
         {/* CTA buttons */}
         <motion.div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.6 }}
@@ -104,6 +104,13 @@ export function Hero() {
                 size={16}
                 className="transition-transform group-hover:translate-x-1"
               />
+            </MagneticButton>
+          </Link>
+
+          <Link href="https://talentos-api.praneethd.xyz/" target="_blank" rel="noopener noreferrer">
+            <MagneticButton className="group flex items-center gap-2 px-6 py-4 rounded-full text-base font-medium text-blue-700 bg-blue-50 border border-blue-200 hover:bg-blue-100 hover:border-blue-300 transition-colors">
+              <Code2 size={16} className="text-blue-600" />
+              Explore API Docs
             </MagneticButton>
           </Link>
 

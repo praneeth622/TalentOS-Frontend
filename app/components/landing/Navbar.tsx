@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Menu, X, LayoutDashboard } from "lucide-react";
+import { Menu, X, LayoutDashboard, Code2 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getToken, getStoredRole } from "@/lib/api";
@@ -13,9 +13,9 @@ import { getToken, getStoredRole } from "@/lib/api";
 const navLinks = [
   { label: "Features", href: "/#features" },
   { label: "How It Works", href: "/#how-it-works" },
+  { label: "API Docs", href: "https://talentos-api.praneethd.xyz/", external: true },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/#contact" },
 ];
 
 const MotionLink = motion.create(Link);
@@ -60,22 +60,42 @@ export function Navbar() {
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <MotionLink
-                key={link.label}
-                href={link.href}
-                className="text-sm text-slate-600 hover:text-slate-900 transition-colors relative"
-                whileHover="hover"
-              >
-                {link.label}
-                <motion.span
-                  className="absolute -bottom-1 left-0 h-[2px] bg-blue-600 rounded-full"
-                  variants={{ hover: { width: "100%" } }}
-                  initial={{ width: "0%" }}
-                  transition={{ duration: 0.3 }}
-                />
-              </MotionLink>
-            ))}
+            {navLinks.map((link) =>
+              link.external ? (
+                <motion.a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-blue-600 hover:text-blue-700 transition-colors relative flex items-center gap-1 font-medium"
+                  whileHover="hover"
+                >
+                  <Code2 size={13} />
+                  {link.label}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-[2px] bg-blue-600 rounded-full"
+                    variants={{ hover: { width: "100%" } }}
+                    initial={{ width: "0%" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.a>
+              ) : (
+                <MotionLink
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm text-slate-600 hover:text-slate-900 transition-colors relative"
+                  whileHover="hover"
+                >
+                  {link.label}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-[2px] bg-blue-600 rounded-full"
+                    variants={{ hover: { width: "100%" } }}
+                    initial={{ width: "0%" }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </MotionLink>
+              )
+            )}
           </div>
 
           {/* Desktop CTA buttons */}
@@ -135,23 +155,44 @@ export function Navbar() {
         transition={{ duration: 0.3 }}
         style={{ pointerEvents: mobileOpen ? "auto" : "none" }}
       >
-        {navLinks.map((link, i) => (
-          <Link
-            key={link.label}
-            href={link.href}
-            className="text-lg text-slate-800 py-3 border-b border-slate-100"
-            onClick={() => setMobileOpen(false)}
-          >
-            <motion.span
-              className="block"
-              initial={{ opacity: 0, x: -20 }}
-              animate={mobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-              transition={{ delay: i * 0.05 + 0.1 }}
+        {navLinks.map((link, i) =>
+          link.external ? (
+            <a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-lg text-blue-600 py-3 border-b border-slate-100 font-medium"
+              onClick={() => setMobileOpen(false)}
             >
-              {link.label}
-            </motion.span>
-          </Link>
-        ))}
+              <motion.span
+                className="flex items-center gap-1.5"
+                initial={{ opacity: 0, x: -20 }}
+                animate={mobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                transition={{ delay: i * 0.05 + 0.1 }}
+              >
+                <Code2 size={16} />
+                {link.label}
+              </motion.span>
+            </a>
+          ) : (
+            <Link
+              key={link.label}
+              href={link.href}
+              className="text-lg text-slate-800 py-3 border-b border-slate-100"
+              onClick={() => setMobileOpen(false)}
+            >
+              <motion.span
+                className="block"
+                initial={{ opacity: 0, x: -20 }}
+                animate={mobileOpen ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                transition={{ delay: i * 0.05 + 0.1 }}
+              >
+                {link.label}
+              </motion.span>
+            </Link>
+          )
+        )}
 
         <div className="mt-4 space-y-3">
           {isLoggedIn ? (

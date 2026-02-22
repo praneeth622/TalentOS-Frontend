@@ -7,6 +7,7 @@ import { Features } from "./components/landing/Features";
 import { HowItWorks } from "./components/landing/HowItWorks";
 import { Benefits } from "./components/landing/Benefits";
 import { UseCases } from "./components/landing/UseCases";
+import { ApiDocs } from "./components/landing/ApiDocs";
 import { Integrations } from "./components/landing/Integrations";
 import { Testimonials } from "./components/landing/Testimonials";
 import { CTA } from "./components/landing/CTA";
@@ -25,6 +26,7 @@ export default function LandingPage() {
         <HowItWorks />
         <Benefits />
         <UseCases />
+        <ApiDocs />
         <Integrations />
         <Testimonials />
         <CTA />

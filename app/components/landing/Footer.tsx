@@ -18,9 +18,9 @@ const footerLinks = {
     { label: "Contact", href: "/#contact" },
   ],
   Resources: [
-    { label: "Documentation", href: "#" },
-    { label: "API Reference", href: "#" },
-    { label: "Support", href: "#" },
+    { label: "Documentation", href: "https://talentos-api.praneethd.xyz/" },
+    { label: "API Reference", href: "https://talentos-api.praneethd.xyz/" },
+    { label: "Support", href: "/#contact" },
     { label: "Status", href: "#" },
   ],
   Legal: [
