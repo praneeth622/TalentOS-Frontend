@@ -104,7 +104,7 @@ How users move through TalentOS — **Admin** (organization) and **Employee** fl
 - **Dual-role auth:** Clear separation (admin vs employee) with role-specific routes and layouts; no cross-role access.
 - **Web3 optional:** Task verification on-chain is optional; core HR flows work without MetaMask.
 
-For **GTM plan** (target personas, 3-month roadmap, ₹5,000 marketing experiment, revenue streams), see **[docs/GTM_PLAN.md](../docs/GTM_PLAN.md)**.
+For **GTM plan** (target personas, 3-month roadmap, ₹5,000 marketing experiment, revenue streams), see **[GTM_PLAN.md](./GTM_PLAN.md)**.
 
 ## Pages
 
