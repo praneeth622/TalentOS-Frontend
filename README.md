@@ -6,7 +6,34 @@ Modern workforce intelligence dashboard built with Next.js, featuring dual-role 
 **API Docs:** [talentos-api.praneethd.xyz](https://talentos-api.praneethd.xyz/)  
 **Backend API (production):** https://talentos-backend.onrender.com
 
+---
 
+## Demo Credentials
+
+> Use these to explore the live app at [talentos.praneethd.xyz](https://talentos.praneethd.xyz) without registering.
+
+### Admin (Organization)
+
+> Login tab: **Organization**
+
+| Field | Value |
+|-------|-------|
+| Email | `admin@gmail.com` |
+| Password | `12345678` |
+
+### Employee
+
+> Login tab: **Employee**
+
+| Field | Value |
+|-------|-------|
+| Email | `praneethdevarasetty31@gmail.com` |
+| Password | `p0d43Pb-tpcB` |
+
+**Or add your own employee:**  
+Log in as admin → `/employees` → **Add Employee** → enter any email → the system auto-generates a password and emails it to that address. The new employee can then log in via the **Employee** tab.
+
+---
 
 ## Tech Stack
 
